@@ -24,7 +24,6 @@ class RegisterController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        // 👇 تحقق واش هذا أول user
         $isFirstUser = User::count() === 0;
 
         $user = User::create([
