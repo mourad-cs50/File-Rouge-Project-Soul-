@@ -6,13 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Ensures the authenticated admin has a section assigned to them.
- * If the admin has no section, they are redirected with an error.
- *
- * Usage in routes:
- *   ->middleware('has.section')
- */
+
 class EnsureAdminHasSection
 {
     public function handle(Request $request, Closure $next): Response
@@ -23,12 +17,12 @@ class EnsureAdminHasSection
             return redirect()->route('login');
         }
 
-        // Only applies to admins — managers and regular users skip this
+       
         if ($user->role !== 'admin') {
             return $next($request);
         }
 
-        // Admin must have a section assigned (via admin_id on sections table)
+        
         $hasSection = $user->administeredSections()->exists();
 
         if (!$hasSection) {
