@@ -12,9 +12,9 @@ class PostReport extends Model
     protected $fillable = [
         'post_id',
         'reported_by',
-        'reason',       // spam | harassment | inappropriate | false_information | other
+        'reason',       
         'details',
-        'status',       // pending | kept | deleted
+        'status',       
         'reviewed_by',
         'reviewed_at',
     ];
@@ -22,8 +22,6 @@ class PostReport extends Model
     protected $casts = [
         'reviewed_at' => 'datetime',
     ];
-
-    // ── Relationships ─────────────────────────────────────────────────────────
 
     public function post()
     {
@@ -40,7 +38,7 @@ class PostReport extends Model
         return $this->belongsTo(User::class, 'reviewed_by');
     }
 
-    // ── Scopes ────────────────────────────────────────────────────────────────
+   
 
     public function scopePending($query)
     {
@@ -52,9 +50,8 @@ class PostReport extends Model
         return $query->whereHas('post', fn ($q) => $q->where('section_id', $sectionId));
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /** Human-readable reason label */
+   
+    
     public function reasonLabel(): string
     {
         return match($this->reason) {
@@ -67,7 +64,7 @@ class PostReport extends Model
         };
     }
 
-    /** Tailwind classes for the reason badge */
+    
     public function reasonBadgeClass(): string
     {
         return match($this->reason) {
@@ -79,7 +76,7 @@ class PostReport extends Model
         };
     }
 
-    /** Risk level label for display */
+    
     public function riskLabel(): string
     {
         return match($this->reason) {

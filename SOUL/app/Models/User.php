@@ -15,8 +15,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',       // 'user' | 'admin' | 'manager'
-        'status',     // 'pending' | 'active' | 'banned'
+        'role',       
+        'status',     
         'section_id',
     ];
 
@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
 
-    // ── Auto force manager to be active ─────────────────────────────────────
+  
 protected static function booted()
 {
     static::creating(function ($user) {
@@ -44,16 +44,16 @@ protected static function booted()
     });
 }
 
-    // ── Role helpers ──────────────────────────────────────────────────────────
+   
     public function isAdmin(): bool   { return $this->role === 'admin'; }
     public function isManager(): bool { return $this->role === 'manager'; }
 
-    // ── Status helpers ────────────────────────────────────────────────────────
+    
     public function isActive(): bool  { return $this->status === 'active'; }
     public function isPending(): bool { return $this->status === 'pending'; }
     public function isBanned(): bool  { return $this->status === 'banned'; }
 
-    /** Tailwind classes for the status badge */
+   
     public function statusBadgeClass(): string
     {
         return match($this->status) {
@@ -64,7 +64,7 @@ protected static function booted()
         };
     }
 
-    /** Dot color for the status indicator */
+   
     public function statusDotClass(): string
     {
         return match($this->status) {
@@ -74,7 +74,7 @@ protected static function booted()
         };
     }
 
-    // ── Relationships ─────────────────────────────────────────────────────────
+    
     public function section()
     {
         return $this->belongsTo(Section::class);

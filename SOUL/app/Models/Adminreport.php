@@ -14,12 +14,12 @@ class AdminReport extends Model
 
     protected $fillable = [
         'admin_id',
-        'category',           // security | user_conduct | technical | other
+        'category',           
         'description',
         'attachment_path',
         'attachment_filename',
         'attachment_mime',
-        'status',             // pending | reviewed | dismissed
+        'status',             
         'manager_notes',
         'reviewed_at',
     ];
@@ -28,23 +28,19 @@ class AdminReport extends Model
         'reviewed_at' => 'datetime',
     ];
 
-    // ── Relationships ─────────────────────────────────────────────────────────
-
-    /** The admin who submitted the report */
+   
     public function admin()
     {
         return $this->belongsTo(User::class, 'admin_id');
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /** Public URL to the attachment */
+   
     public function attachmentUrl(): ?string
     {
         return $this->attachment_path ? Storage::url($this->attachment_path) : null;
     }
 
-    /** Human-readable category label */
+    
     public function categoryLabel(): string
     {
         return match($this->category) {
@@ -61,7 +57,7 @@ class AdminReport extends Model
     return in_array($this->status, ['reviewed', 'dismissed']);
 }
 
-    /** Material icon name per category */
+    
     public function categoryIcon(): string
     {
         return match($this->category) {
@@ -73,7 +69,7 @@ class AdminReport extends Model
         };
     }
 
-    /** Tailwind classes for status badge */
+   
     public function statusBadgeClass(): string
     {
         return match($this->status) {

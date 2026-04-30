@@ -13,11 +13,11 @@ class MemberReport extends Model
 
     protected $fillable = [
         'user_id',
-        'type',     // admin | member
+        'type',     
         'subject',
         'body',
-        'priority', // low | medium | high | critical
-        'status',   // new | pending | in_progress | resolved | closed
+        'priority', 
+        'status',  
         'resolved_at',
         'resolved_by',
     ];
@@ -26,22 +26,18 @@ class MemberReport extends Model
         'resolved_at' => 'datetime',
     ];
 
-    // ── Relationships ─────────────────────────────────────────────────────────
-
-    /** The user who submitted the complaint */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /** The manager/admin who resolved it */
+  
     public function resolver()
     {
         return $this->belongsTo(User::class, 'resolved_by');
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
+ 
     public function isResolved(): bool
     {
         return in_array($this->status, ['resolved', 'closed']);

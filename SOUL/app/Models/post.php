@@ -14,7 +14,7 @@ class Post extends Model
     protected $fillable = [
         'user_id',
         'section_id',
-        'type',             // text | image | video | audio
+        'type',            
         'body',
         'media_path',
         'media_filename',
@@ -22,7 +22,7 @@ class Post extends Model
         'media_size',
         'media_duration',
         'thumbnail_path',
-        'status',           // pending | approved | rejected
+        'status',           
         'deleted_by',
         'deleted_at_by_admin',
     ];
@@ -31,7 +31,7 @@ class Post extends Model
         'deleted_at_by_admin' => 'datetime',
     ];
 
-    // ── Relationships ─────────────────────────────────────────────────────────
+   
 
     public function user()
     {
@@ -68,7 +68,7 @@ class Post extends Model
         return $this->likes()->where('user_id', $userId)->exists();
     }
     
-    // ── Scopes ───────────────────────────────────────────────────────────────
+   
 
     public function scopeOfType($query, string $type)
     {
@@ -90,21 +90,19 @@ class Post extends Model
         return $query->where('status', 'approved');
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    /** Public URL to the media file */
+   
     public function mediaUrl(): ?string
     {
         return $this->media_path ? Storage::url($this->media_path) : null;
     }
 
-    /** Public URL to the thumbnail (video/image) */
+    
     public function thumbnailUrl(): ?string
     {
         return $this->thumbnail_path ? Storage::url($this->thumbnail_path) : null;
     }
 
-    /** Human-readable file size */
+  
     public function formattedSize(): string
     {
         if (!$this->media_size) return '—';
@@ -118,7 +116,7 @@ class Post extends Model
         return round($size, 1) . ' ' . $units[$i];
     }
 
-    /** Formatted duration MM:SS */
+    
     public function formattedDuration(): string
     {
         if (!$this->media_duration) return '';
@@ -127,7 +125,7 @@ class Post extends Model
         return sprintf('%d:%02d', $m, $s);
     }
 
-    /** Badge label & Tailwind classes by type */
+    
     public function typeBadgeClass(): string
     {
         return match($this->type) {
@@ -139,7 +137,7 @@ class Post extends Model
         };
     }
 
-    /** Human-readable type label */
+    
     public function typeLabel(): string
     {
         return match($this->type) {
